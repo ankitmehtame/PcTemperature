@@ -24,9 +24,14 @@ namespace PcTemperature.Controllers
                 var reader = new SpeedFanFileReader(filePath);
                 await reader.Init();
                 var reading = reader.GetLatestTemperatureReading();
-                if(reading == null)
+                if (reading == null)
                 {
-                    reading = TempReading.NotAvailable;
+                    reading = TempReadingExtensions.CreateUnsuccessfulReading();
+                }
+                else if (reading.TimeStamp <= DateTime.UtcNow.Subtract(TimeSpan.FromMinutes(1)))
+                {
+                    Log.Debug($"Last reading is not recent. Taken at {reading.TimeStamp.ToString("yyyyMMdd HH:mm:ss")}");
+                    return reading = TempReadingExtensions.CreateUnsuccessfulReading();
                 }
                 Log.Debug("Returning reading " + await reading.ToDisplayText());
                 return reading;
@@ -34,12 +39,12 @@ namespace PcTemperature.Controllers
             catch (AggregateException ex)
             {
                 Log.Debug($"Aggregate Error in GetReadings. Error: {ex}");
-                return TempReading.NotAvailable;
+                return TempReadingExtensions.CreateUnsuccessfulReading();
             }
             catch (Exception ex)
             {
                 Log.Debug($"Error in GetReadings. Error: {ex}");
-                return TempReading.NotAvailable;
+                return TempReadingExtensions.CreateUnsuccessfulReading();
             }
         }
 

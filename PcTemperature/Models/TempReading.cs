@@ -27,7 +27,5 @@ namespace PcTemperature.Models
         public decimal CoreTempMax {  get { return CoreTemperatures.MaxOrDefault().RoundValue(2); } }
 
         public bool IsSuccessful { get; set; }
-
-        public static readonly TempReading NotAvailable = new TempReading { IsSuccessful = false };
     }
 }

@@ -131,7 +131,7 @@ namespace PcTemperature.Services
             {
                 var fileName = Path.GetFileNameWithoutExtension(_filePath);
                 var dateText = fileName.Substring(fileName.Length - 8);
-                date = DateTime.ParseExact(dateText, "yyyyMMdd", CultureInfo.InvariantCulture);
+                date = DateTime.ParseExact(dateText, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.AssumeLocal).ToUniversalTime();
                 return date;
             }
             catch (Exception ex)
