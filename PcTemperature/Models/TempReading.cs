@@ -1,7 +1,7 @@
-﻿using CpuTemperature.Helpers;
+﻿using PcTemperature.Helpers;
 using System;
 
-namespace CpuTemperature.Models
+namespace PcTemperature.Models
 {
     public class TempReading
     {

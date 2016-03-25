@@ -1,6 +1,6 @@
-﻿namespace CpuTemperature
+﻿namespace PcTemperature
 {
-    partial class CpuTempReaderService
+    partial class PcTempReaderService
     {
         /// <summary> 
         /// Required designer variable.

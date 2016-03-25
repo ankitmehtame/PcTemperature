@@ -1,5 +1,5 @@
-﻿using CpuTemperature.Helpers;
-using CpuTemperature.Models;
+﻿using PcTemperature.Helpers;
+using PcTemperature.Models;
 using log4net;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CpuTemperature.Services
+namespace PcTemperature.Services
 {
     public class SpeedFanFileReader
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CpuTemperature.Helpers
+namespace PcTemperature.Helpers
 {
     public static class DecimalExtensions
     {

@@ -2,7 +2,7 @@
 using System;
 using System.ServiceProcess;
 
-namespace CpuTemperature
+namespace PcTemperature
 {
     static class Program
     {
@@ -22,14 +22,14 @@ namespace CpuTemperature
                     ServiceBase[] ServicesToRun;
                     ServicesToRun = new ServiceBase[]
                     {
-                        new CpuTempReaderService()
+                        new PcTempReaderService()
                     };
                     ServiceBase.Run(ServicesToRun);
                 }
                 else
                 {
                     Log.Info("Starting as interactive console app. Press enter to exit.");
-                    var service = new CpuTempReaderService();
+                    var service = new PcTempReaderService();
                     service.StartService(args);
                     Console.ReadLine();
                     service.StopService();

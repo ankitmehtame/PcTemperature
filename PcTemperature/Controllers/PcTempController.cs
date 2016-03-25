@@ -1,13 +1,13 @@
-﻿using CpuTemperature.Helpers;
-using CpuTemperature.Models;
-using CpuTemperature.Services;
+﻿using PcTemperature.Helpers;
+using PcTemperature.Models;
+using PcTemperature.Services;
 using log4net;
 using System;
 using System.Configuration;
 using System.Threading.Tasks;
 using System.Web.Http;
 
-namespace CpuTemperature.Controllers
+namespace PcTemperature.Controllers
 {
     public class PcTempController : ApiController
     {

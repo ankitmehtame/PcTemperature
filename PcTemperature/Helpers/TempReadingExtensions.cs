@@ -1,7 +1,7 @@
-﻿using CpuTemperature.Models;
+﻿using PcTemperature.Models;
 using System.Threading.Tasks;
 
-namespace CpuTemperature.Helpers
+namespace PcTemperature.Helpers
 {
     public static class TempReadingExtensions
     {

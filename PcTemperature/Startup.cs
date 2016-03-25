@@ -1,11 +1,11 @@
-﻿using CpuTemperature.Helpers;
+﻿using PcTemperature.Helpers;
 using Microsoft.Owin;
 using Owin;
 using System.Web.Http;
 
-[assembly: OwinStartup(typeof(CpuTemperature.Startup))]
+[assembly: OwinStartup(typeof(PcTemperature.Startup))]
 
-namespace CpuTemperature
+namespace PcTemperature
 {
     internal class Startup
     {

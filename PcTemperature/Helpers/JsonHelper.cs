@@ -3,7 +3,7 @@ using Newtonsoft.Json.Serialization;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace CpuTemperature.Helpers
+namespace PcTemperature.Helpers
 {
     public static class JsonHelper
     {

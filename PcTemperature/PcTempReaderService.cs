@@ -3,14 +3,14 @@ using Microsoft.Owin.Hosting;
 using System;
 using System.ServiceProcess;
 
-namespace CpuTemperature
+namespace PcTemperature
 {
-    public partial class CpuTempReaderService : ServiceBase
+    public partial class PcTempReaderService : ServiceBase
     {
         private IDisposable _server = null;
-        private static readonly ILog Log = LogManager.GetLogger(typeof(CpuTempReaderService));
+        private static readonly ILog Log = LogManager.GetLogger(typeof(PcTempReaderService));
 
-        public CpuTempReaderService()
+        public PcTempReaderService()
         {
             InitializeComponent();
         }

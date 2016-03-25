@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CpuTemperature.Helpers
+namespace PcTemperature.Helpers
 {
     public static class EnumerableExtensions
     {
