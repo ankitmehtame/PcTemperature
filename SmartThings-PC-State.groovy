@@ -66,8 +66,9 @@ def parse(String description)
     }
     else
     {
-        log.debug("is not successful")
-        updateStatus("offline")
+        log.debug("temp retrieval was unsuccessful")
+        updateStatus("online")
+        sendEvent(name: "cputemp", value: "N/A", display: true, descriptionText: "CPU temp is N/A")
     }
   return null
 }
