@@ -7,9 +7,9 @@ metadata
 {
   definition (name: "Ankit PC State", author: "Ankit Mehta")
   {
+    capability "Temperature Measurement"
     capability "Refresh"
     capability "Polling"
-    attribute "cputemp", "NUMBER"
   }
   simulator
   { }
@@ -20,16 +20,16 @@ metadata
       state "offline", label:"Offline", backgroundColor:"#ffffff", defaultState: true
       state "online", label:"Online", backgroundColor:"#79b821"
     }
+    standardTile("temperature", "device.temperature", inactiveLabel: true, decoration: "flat")
+    {
+      state "temperature", label: '${currentValue}°C'
+    }
     standardTile("refresh", "device.switch", inactiveLabel: true, decoration: "flat")
     {
       state "default", label:"", action:"refresh.refresh", icon:"st.secondary.refresh"
     }
-    valueTile("cputemp", "device.cputemp", decoration: "flat")
-    {
-      state "cputemp", label:'CPU ${currentValue} °C'
-    }
     main("state")
-    details(["state", "cputemp", "refresh"])
+    details(["state", "temperature", "refresh"])
   }
 }
 
@@ -62,13 +62,13 @@ def parse(String description)
         def maxcputemp = json.coreTempMax
         
         log.debug("max cpu temp ${maxcputemp}")
-        sendEvent(name: "cputemp", value: maxcputemp, display: true, descriptionText: "CPU temp is ${maxcputemp} °C")
+        sendEvent(name: "temperature", value: maxcputemp, display: true, descriptionText: device.displayName + " is ${maxcputemp} °C")
     }
     else
     {
         log.debug("temp retrieval was unsuccessful")
         updateStatus("online")
-        sendEvent(name: "cputemp", value: "N/A", display: true, descriptionText: "CPU temp is N/A")
+        sendEvent(name: "temperature", value: "N/A", display: true, descriptionText: device.displayName + " is N/A")
     }
   return null
 }
