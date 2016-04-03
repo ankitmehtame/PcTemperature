@@ -35,25 +35,23 @@ metadata
 
 def parse(String description)
 {
-    log.debug "parse called with ${description}"
-    state.counter = 0
-    log.debug("counter is " + state.counter)
+    // log.debug "parse called with ${description}"
     def msg = parseLanMessage(description)
 
     def status = msg.status          // => http status code of the response
-    log.debug("status ${status}")
+    // log.debug("status ${status}")
     def json = msg.json              // => any JSON included in response body, as a data structure of lists and maps
-    log.debug("json ${json}")
+    // log.debug("json ${json}")
     
     if(status != 200)
     {
         log.debug("status is not 200")
         updateStatus("offline")
-        return null
+        refreshComplete()
+        return
     }
     
     def isSuccessful = json.isSuccessful
-    log.debug("isSuccessful? ${isSuccessful}")
     
     if(isSuccessful == true)
     {
@@ -70,25 +68,47 @@ def parse(String description)
         updateStatus("online")
         sendEvent(name: "temperature", value: "N/A", display: true, descriptionText: device.displayName + " is N/A")
     }
-  return null
+    refreshComplete()
 }
 
 def poll()
 {
+  log.debug("poll called.")
+  state.ispolling = true
   refresh()
 }
 
 def refresh()
 {
   log.debug("refresh called.")
+  if(state.isrefreshing == true)
+  {
+    log.debug("already refreshing. not proceeding.")
+    return
+  }
+  state.isrefreshing = true
   try
   {
-      return myCommand()
+      log.debug "Calling ${hostaddress}"
+      updateStatusBeforeRefresh()
+      def cmd = myCommand()
+      sendHubCommand(cmd)
   }
   catch(all)
   {
-        log.debug("Error during refresh in catch all for httpget. Error: ${all}")
-        updateStatus("offline")
+      log.debug("Error during refresh in catch all for httpget. Error: ${all}")
+      updateStatus("offline")
+      refreshComplete()
+  }
+}
+
+def refreshComplete()
+{
+  state.isrefreshing = false
+  log.debug("refresh complete")
+  if(state.ispolling)
+  {
+    runIn(60 * 10, refresh)
   }
 }
 
@@ -100,24 +120,21 @@ def myCommand() {
             HOST: "${hostaddress}"
         ]
     )
-    log.debug "Calling ${hostaddress}"
-    updateStatusBeforeRefresh()
-    state.counter = 1
     return result
 }
 
 def updateStatusBeforeRefresh()
 {
     runIn(15, handler)
-    return null
 }
 
 def handler()
 {
-    if(state.counter != 0)
+    if(state.isrefreshing == true)
     {
         log.debug("Looks like the call did not complete. setting state as offline")
         updateStatus("offline")
+        refreshComplete()
     }
 }
 
